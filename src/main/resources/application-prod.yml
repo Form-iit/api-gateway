@@ -1,0 +1,20 @@
+spring:
+    config:
+        import: "configserver:${CONFIG_SERVER_URL}"
+        # Spring Cloud Config Repo
+    cloud:
+        config:
+            # This sets the file to look for in the config-server to 'application-prod.yml' within the branch gateway
+            name: application
+            label: gateway
+            profile: prod
+            discovery:
+                enabled: false
+            fail-fast: true
+            retry:
+                initial-interval: 1000
+                max-attempts: 6
+                max-interval: 2000
+                multiplier: 1.1
+            username: ${SPRING_CLOUD_CONFIG_USERNAME}
+            password: ${SPRING_CLOUD_CONFIG_PASSWORD}

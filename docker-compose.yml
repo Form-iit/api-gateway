@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      # Config server
+      - CONFIG_SERVER_URL=${testValue}
+      - SPRING_CLOUD_CONFIG_PASSWORD=${testValue}
+      # Eureka config
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE= ${testZone}
+      - EUREKA_INSTANCE_HOSTNAME= ${testHostname}
+      - EUREKA_INSTANCE_IP_ADDRESS= ${testIP}
+      # Gateway config
+      # 1. eureka route
+      - EUREKA_SERVER_URL= ${EUREKA_SERVER_URL}
+      - EUREKA_BASIC_AUTH= ${EUREKA_BASIC_AUTH}
+    ports:
+      - "8080:8080"  # Gateway public port
+    restart: always
